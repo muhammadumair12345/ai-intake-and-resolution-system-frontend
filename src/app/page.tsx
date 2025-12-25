@@ -1,24 +1,19 @@
-"use client";
+import { TicketSubmitForm } from "@/components/forms/TicketSubmitForm";
 
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import { useAppSelector } from "@/lib/redux/hooks";
-
-export default function HomePage() {
-  const router = useRouter();
-  const { isAuthenticated, user } = useAppSelector((state) => state.auth);
-
-  useEffect(() => {
-    // Unauthenticated -> /login
-    // Authenticated -> Middleware redirects /login -> /admin/triage
-    router.replace("/login");
-  }, [router]);
-
+export default function SubmitTicketPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="animate-pulse space-y-4 text-center">
-        <h1 className="text-2xl font-bold">Redirecting...</h1>
-        <div className="w-8 h-8 bg-primary rounded-full mx-auto" />
+    <div className="min-h-screen bg-background py-12 px-4">
+      <div className="max-w-3xl mx-auto space-y-12">
+        <div className="text-center space-y-4">
+          <h1 className="text-4xl font-extrabold tracking-tight text-primary">
+            Submit a Support Ticket
+          </h1>
+          <p className="text-muted-foreground text-xl max-w-2xl mx-auto">
+            Our AI-powered system will analyze your request and route it to the
+            right expert immediately.
+          </p>
+        </div>
+        <TicketSubmitForm />
       </div>
     </div>
   );

@@ -47,7 +47,7 @@ This is the frontend dashboard for the AI Intake & Resolution System, built with
 
 ## Key Features
 
-- **Public Ticket Submission:** `/submit`
+- **Public Ticket Submission:** `/`
 - **Admin Dashboard:** `/admin/triage` (Requires Login)
 - **Manager Dashboard:** `/manager/tickets` (Requires Login)
 - **Authentication:** Role-based access control (Admin/Manager).
