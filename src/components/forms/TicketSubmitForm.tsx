@@ -8,7 +8,6 @@ import {
   useCreateTicketMutation,
   useCheckDuplicatesMutation,
 } from "@/lib/redux/api/ticketApi";
-import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -39,7 +38,6 @@ import {
 } from "@/components/ui/dialog";
 
 export function TicketSubmitForm() {
-  const router = useRouter();
   const [createTicket, { isLoading: isCreating }] = useCreateTicketMutation();
   const [checkDuplicates, { isLoading: isChecking }] =
     useCheckDuplicatesMutation();
@@ -67,7 +65,7 @@ export function TicketSubmitForm() {
         toast.success(
           "Ticket submitted successfully! Check your email for the link."
         );
-        router.push(`/ticket/${response.data.uniqueToken}`);
+        form.reset();
       }
     } catch (error: any) {
       toast.error(error?.data?.message || "Failed to submit ticket");

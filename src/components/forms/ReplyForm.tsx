@@ -3,7 +3,10 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { messageSchema, type MessageInput } from "@/lib/validations/schemas";
-import { useCreateMessageMutation } from "@/lib/redux/api/messageApi";
+import {
+  useCreateMessageMutation,
+  useCreateMessageByTokenMutation,
+} from "@/lib/redux/api/messageApi";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -19,6 +22,7 @@ import { Send } from "lucide-react";
 
 interface ReplyFormProps {
   ticketId: string;
+  token?: string;
   senderType: "GUEST" | "MANAGER" | "ADMIN" | "SYSTEM";
   senderName?: string;
   onSuccess?: () => void;
@@ -26,11 +30,14 @@ interface ReplyFormProps {
 
 export function ReplyForm({
   ticketId,
+  token,
   senderType,
   senderName,
   onSuccess,
 }: ReplyFormProps) {
   const [createMessage, { isLoading }] = useCreateMessageMutation();
+  const [createMessageByToken, { isLoading: isTokenLoading }] =
+    useCreateMessageByTokenMutation();
 
   const form = useForm<MessageInput>({
     resolver: zodResolver(messageSchema),
@@ -41,14 +48,15 @@ export function ReplyForm({
 
   const onSubmit = async (data: MessageInput) => {
     try {
-      const response = await createMessage({
-        ticketId,
-        data: {
-          content: data.content,
-          senderType,
-          senderName,
-        },
-      }).unwrap();
+      const payload = {
+        content: data.content,
+        senderType,
+        senderName,
+      };
+
+      const response = token
+        ? await createMessageByToken({ token, data: payload }).unwrap()
+        : await createMessage({ ticketId, data: payload }).unwrap();
 
       if (response.success) {
         form.reset();
@@ -80,8 +88,8 @@ export function ReplyForm({
           )}
         />
         <div className="flex justify-end">
-          <Button type="submit" disabled={isLoading} size="lg">
-            {isLoading ? (
+          <Button type="submit" disabled={isLoading || isTokenLoading} size="lg">
+            {isLoading || isTokenLoading ? (
               <LoadingSpinner size="sm" className="mr-2" />
             ) : (
               <Send className="w-4 h-4 mr-2" />

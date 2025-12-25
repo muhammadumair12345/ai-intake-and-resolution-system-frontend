@@ -111,6 +111,7 @@ export default function GuestTicketViewPage() {
           <div className="p-6 bg-background">
             <ReplyForm
               ticketId={ticket.id}
+              token={token}
               senderType="GUEST"
               senderName={ticket.guestName}
             />

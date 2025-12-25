@@ -23,6 +23,19 @@ export const messageApi = baseApi.injectEndpoints({
         { type: "Tickets", id: ticketId },
       ],
     }),
+    createMessageByToken: builder.mutation<
+      ApiResponse<Message>,
+      { token: string; data: CreateMessageRequest }
+    >({
+      query: ({ token, data }) => ({
+        url: `/messages/token/${token}`,
+        method: "POST",
+        body: data,
+      }),
+      invalidatesTags: (result, error, { token }) => [
+        { type: "Messages", id: token },
+      ],
+    }),
     getMessages: builder.query<ApiResponse<Message[]>, string>({
       query: (ticketId) => `/messages/${ticketId}`,
       providesTags: (result, error, ticketId) => [
@@ -38,6 +51,7 @@ export const messageApi = baseApi.injectEndpoints({
 
 export const {
   useCreateMessageMutation,
+  useCreateMessageByTokenMutation,
   useGetMessagesQuery,
   useGetMessagesByTokenQuery,
 } = messageApi;
