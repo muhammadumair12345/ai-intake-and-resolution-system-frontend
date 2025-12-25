@@ -1,36 +1,67 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Intake & Resolution System - Frontend
+
+This is the frontend dashboard for the AI Intake & Resolution System, built with Next.js 14, Tailwind CSS, and Redux Toolkit.
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- Backend API running (usually on port 5000)
 
 ## Getting Started
 
-First, run the development server:
+1.  **Navigate to the frontend directory:**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    ```bash
+    cd ai-intake-and-resolution-system/frontend
+    ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2.  **Install dependencies:**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    ```bash
+    npm install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3.  **Environment Setup:**
+    Create a `.env` file in the `frontend` directory:
 
-## Learn More
+    ```env
+    # URL of the backend API
+    NEXT_PUBLIC_API_URL="http://localhost:5000/api"
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+4.  **Running the Application:**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+    - **Development Mode:**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+      ```bash
+      npm run dev
+      ```
 
-## Deploy on Vercel
+      Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    - **Production Build:**
+      ```bash
+      npm run build
+      npm start
+      ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Key Features
+
+- **Public Ticket Submission:** `/submit`
+- **Admin Dashboard:** `/admin/triage` (Requires Login)
+- **Manager Dashboard:** `/manager/tickets` (Requires Login)
+- **Authentication:** Role-based access control (Admin/Manager).
+
+## Project Structure
+
+- `src/app`: Next.js App Router pages and layouts.
+- `src/components`: Reusable UI components.
+- `src/lib/redux`: Redux store, slices, and RTK Query API definitions.
+- `src/middleware.ts`: Route protection middleware.
+
+## Credentials (Default Seed)
+
+If you ran the backend seed script, use these default credentials:
+
+- **Admin:** `admin@aisupport.com` / `Admin@123`
+- **Manager:** `manager1@aisupport.com` / `Manager@123`
